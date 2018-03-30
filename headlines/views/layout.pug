@@ -1,7 +1,35 @@
 doctype html
-html
+html(lang='en')
   head
-    title= title
+    title headlines
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='mobile-web-app-capable', content='yes')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/responsive.css')
+    link(rel='icon', href='', type='image/x-icon')
   body
-    block content
+    div(class='content')
+      div(class='header')
+        a(id='menu', class='header_menu')
+          svg(xmlns='http://www.w3.org/20d00/svg', viewBox='0 0 24 24')
+            path(d='M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z')
+        h1 RSS feed
+      div(class='nav-bar')
+        li(class='nav-button')
+          a(href='/') home
+        li(class='nav-button')
+          a(href='/country') countries
+        li(class='nav-button')
+          a(href='/source') sources
+        form(class='searcher')
+          input(type='text', placeholder='search', class='search')
+          button(class='fontawesome-search')
+
+      block content
+
+    hr
+    section(class='footer') footer goes here
+
+    script(src='/javascripts/idb.js')
+    script(src='/javascripts/db.js')

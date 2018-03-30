@@ -6,3 +6,8 @@ body {
 a {
   color: #00B7FF;
 }
+
+svg{
+	height: 45px;
+	width: 45px;
+}
