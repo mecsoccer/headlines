@@ -5,22 +5,26 @@ router.get('/', function(req, res, next){
 	res.render('index', {title: 'news unfiltered'});
 });
 
-router.get('/country', function(req, res, next){
+router.get('/countries', function(req, res, next){
 	res.render('countrylist', {title: 'list of countries'});
 });
 
-router.get('/country/:country', function(req, res, next){
+router.get('/countries/:country', function(req, res, next){
 	res.render('country', {title: 'news-' + req.params.country});
 });
 
-router.get('/source', function(req, res, next){
-	res.render('source', {
+router.get('/sources', function(req, res, next){
+	res.render('sourcelist', {
 		title: 'news-' + req.params.source, 
-		list: ['bbc-news','cnn-news', 'aj-news']
+		list: [
+		       {source: 'bbc-news', url: '/news/sources/bbc-news'},
+			   {source: 'cnn', url: '/news/sources/cnn'},
+			   {source: 'al-jazeera-english', url: '/news/sources/aj-news'}
+			  ]
 	});
 });
 
-router.get('/source/:source', function(req, res, next){
+router.get('/sources/:source', function(req, res, next){
 	res.render('source', {title: 'news-' + req.params.source});
 });
 

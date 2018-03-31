@@ -1,1 +1,7 @@
 extends layout
+
+block content
+  ul
+  each source in list
+    li
+      a(href=source.url) #{source.source}
