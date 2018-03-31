@@ -1,1 +1,9 @@
 extends layout
+
+block content
+  h1= title
+  
+  ul
+  each country in list
+    li
+      a(href=country.url) #{country.country}
