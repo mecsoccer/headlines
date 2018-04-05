@@ -79,7 +79,6 @@ p,.title{
 
 .nav-button a{
 	text-decoration: none;
-	text-transform: capitalize;
 	color: red;
 }
 
@@ -101,5 +100,8 @@ p,.title{
 .footer div{
 	float: left;
 	width: calc(100vw / 3);
+	text-align: center;
+}
+.cslist,.clist,.slist{
 	text-align: center;
 }

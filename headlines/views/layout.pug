@@ -7,7 +7,7 @@ html(lang='en')
     meta(name='mobile-web-app-capable', content='yes')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/responsive.css')
-    link(rel='icon', href='', type='image/x-icon')
+    link(rel='icon', href='/images/logo.png', type='image/x-icon')
   body
     div(class='content')
       div(id='header', class='header')
@@ -18,15 +18,17 @@ html(lang='en')
           a(href='/news') Headlines
       div(class='nav-bar')
         li(class='nav-button')
-          a(href='/news') home
+          a(href='/news') Home
         li(class='nav-button')
-          a(href='/news/countries') countries
+          a(href='/news/countries') Countries
         li(class='nav-button')
-          a(href='/news/sources') sources
+          a(href='/news/sources') Sources
         li(class='nav-button')
-          a(href='') feedback
+          a(href='') Feedback
         li(class='nav-button')
-          a(href='') contact us
+          a(href='') More
+      div(class='back')
+        a(href='#header') back to top
 
       block content
 
@@ -34,9 +36,12 @@ html(lang='en')
     section(class='footer')
       div(class='facebook')
         a(class='zocial-facebook', href='')
+        p Like Us
       div(class='twitter')
         a(class='zocial-twitter', href='')
+        p Follow Us
       div(class='email')
         a(class='zocial-gmail', href='')
+        p head@line.com
 
     script(src='/javascripts/toggle.js')

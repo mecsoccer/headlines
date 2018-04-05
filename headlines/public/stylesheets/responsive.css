@@ -18,7 +18,7 @@
 	.site-name{
 		width: calc(100% - 50px)
 	}
-	.footer div{text-align: center;}
+	.footer div{text-align: center; width: calc(100vw / 3.3);}
 	.cslist{margin: 0}
 }
 
@@ -77,8 +77,14 @@
 		height: 30%;
 		order: 0;
 		border-radius: 5px;
+		max-width: 127px;
 	}
-	.headline li div{order: 1; width: 60%; padding: 0 5%;}
+	.headline li div{
+		order: 1;
+		width: 75%;
+		padding: 0 5%;
+		max-width: 381px;
+	}
 	.headline li{
 		display: flex;
 		flex-wrap: wrap;
@@ -94,6 +100,19 @@
 }
 
 @media screen and (min-width: 1000px){
-	
+	.headline li{
+		padding-left: 34%;
+	}
+	.nav-button a{
+		padding: 0 6.5%;
+		margin: 0 -2%;
+	}
+	.footer div{
+		width: calc(100% / 3);
+	}
+	.back{
+		margin-top: calc(100vh - 140px);
+		margin-left: calc(100vw - 115px);
+	}
 }
 
