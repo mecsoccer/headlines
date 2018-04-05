@@ -1,3 +1,5 @@
+var dbpromise = require('../javascripts/db');
+
 var StaticCacheName = 'headlines-static-v1';
 
 self.addEventListener('install', function(event){
@@ -6,7 +8,8 @@ self.addEventListener('install', function(event){
 		  return cache.addAll([
 		    '/',
 			'/stylesheets/responsive.css',
-			'/stylesheets/style.css'
+			'/stylesheets/style.css',
+			'http://weloveiconfonts.com/api/fonts/zocial/zocial-regular-webfont.woff'
 		  ]);
 	  })
 	)
@@ -31,7 +34,11 @@ self.addEventListener('fetch', function(event){
 	event.respondWith(
 	  caches.match(event.request).then(function(response){
 		  if (response) return response;
-		  return fetch(event.request);
+		  return event.request;
+	  }).then(function(req){
+		  dbpromise.then(function(db){
+			  
+		  })
 	  })
 	);
 })

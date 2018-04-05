@@ -22,7 +22,7 @@ router.get('/countries/:country', function(req, res, next){
 
 router.get('/sources', function(req, res, next){
 	res.render('sourcelist', {
-		title: 'news-' + req.params.source, 
+		title: 'list of sources', 
 		list: [
 		       {source: 'bbc-news', url: '/news/sources/bbc-news'},
 			   {source: 'cnn', url: '/news/sources/cnn'},

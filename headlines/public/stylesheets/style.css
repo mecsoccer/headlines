@@ -1,13 +1,105 @@
+@import url(http://weloveiconfonts.com/api/?family=zocial);
+
+/* zocial */
+[class*="zocial-"]:before {
+  font-family: 'zocial', sans-serif;
+}
+
 body {
-  padding: 50px;
+  padding: 0;
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+div,form,a,ul,li,h1{
+	box-sizing: border-box;
 }
 
 a {
   color: #00B7FF;
 }
 
+.header{
+	height: 50px;
+}
+
+.site-name{
+	height: 50px;
+	padding-top: 5px;
+	margin: 0;
+	color: blue;
+	position: fixed;
+	width: 100%
+}
+
+.site-name a{
+	color: blue;
+	text-decoration: none
+}
+
+#menu{
+	height: 50px;
+	position: fixed;
+	float: right;
+	width: 100%;
+	margin-left: calc(100% - 45px)
+}
+
 svg{
 	height: 45px;
 	width: 45px;
+}
+
+li{
+	list-style: none;
+}
+
+ul{
+	padding: 0;
+	width: 100%;
+	margin: 0;
+}
+
+.nav-bar{
+	padding: 0;
+	width: 100%;
+	position: fixed;
+	margin-top: 0;
+}
+
+p,.title{
+	width: 100%;
+	margin: 0
+}
+
+.nav-button{
+	padding-bottom: 10px;
+	text-align: center;
+}
+
+.nav-button a{
+	text-decoration: none;
+	text-transform: capitalize;
+	color: red;
+}
+
+.headline li{margin-bottom: 10px;}
+
+.back{
+	position: fixed;
+	margin-top: calc(100vh - 80px);
+    margin-left: calc(100vw - 75px);
+}
+
+.back a{
+	text-decoration: none;
+	color: red;
+}
+
+.footer{display: inlne}
+
+.footer div{
+	float: left;
+	width: calc(100vw / 3);
+	text-align: center;
 }

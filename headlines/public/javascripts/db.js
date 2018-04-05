@@ -10,9 +10,13 @@ dbpromise.then(function(db){
 	.objectStore('headlines').getAll().then(function(data){
 		data.forEach(function(dat){
 			var listItem = document.createElement('li');
-			listItem.innerHTML = '<img src="" alt="news pic"><strong><a href="">' + dat.title
-			                     + '</a></strong><p>' + dat.description + '...' + '</p>'
+			listItem.innerHTML = '<img src="' + "/images/jaachi.jpg" 
+			                     + '" alt="news pic"><div><strong><a class="title" href="' 
+								 + dat.url + '" target="_blank">' + dat.title
+			                     + '</a></strong><p>' + dat.description + '...' + '</p></div>'
 		    mylist.appendChild(listItem);
 		})
 	})
 });
+
+module.exports = dbpromise;

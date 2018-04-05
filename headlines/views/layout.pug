@@ -10,11 +10,12 @@ html(lang='en')
     link(rel='icon', href='', type='image/x-icon')
   body
     div(class='content')
-      div(class='header')
-        a(id='menu', class='header_menu')
+      div(id='header', class='header')
+        a(id='menu', class='menu')
           svg(xmlns='http://www.w3.org/20d00/svg', viewBox='0 0 24 24')
             path(d='M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z')
-        h1 RSS feed
+        h1(class='site-name')
+          a(href='/news') Headlines
       div(class='nav-bar')
         li(class='nav-button')
           a(href='/news') home
@@ -22,14 +23,20 @@ html(lang='en')
           a(href='/news/countries') countries
         li(class='nav-button')
           a(href='/news/sources') sources
-        form(class='searcher')
-          input(type='text', placeholder='search', class='search')
-          button(class='fontawesome-search')
+        li(class='nav-button')
+          a(href='') feedback
+        li(class='nav-button')
+          a(href='') contact us
 
       block content
 
     hr
-    section(class='footer') footer goes here
+    section(class='footer')
+      div(class='facebook')
+        a(class='zocial-facebook', href='')
+      div(class='twitter')
+        a(class='zocial-twitter', href='')
+      div(class='email')
+        a(class='zocial-gmail', href='')
 
-    script(src='/javascripts/idb.js')
-    script(src='/javascripts/db.js')
+    script(src='/javascripts/toggle.js')

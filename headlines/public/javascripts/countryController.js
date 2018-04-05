@@ -1,6 +1,6 @@
 var country = window.location.pathname.slice(16);
 
-newslist = document.querySelector('ul');
+newslist = document.querySelector('.headline');
 
 var url = 'https://newsapi.org/v2/top-headlines?' +
           'country=' + country + '&' +
@@ -12,8 +12,10 @@ fetch(req)
     }).then(function(news){
 		news.articles.forEach(function(article){
 			var listItem = document.createElement('li');
-			listItem.innerHTML = '<img src="' + article.urlToImage + '" alt="news pic"><strong><a href="' + article.url + '" target="_blank">' + article.title
-			                     + '</a></strong><p>' + article.description + '...' + '</p>';
+			listItem.innerHTML = '<img src="' + article.urlToImage 
+			                     + '" alt="news pic"><div><strong><a class="title" href="' 
+								 + article.url + '" target="_blank">' + article.title
+			                     + '</a></strong><p>' + article.description + '...' + '</p></div>'
 		    newslist.appendChild(listItem);
 		})
 	});
