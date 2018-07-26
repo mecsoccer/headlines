@@ -1,44 +1,4 @@
-@media screen and (max-width: 400px){
-	img{
-	width: 100%;
-	height: 100%;
-    }
-	.nav-bar{
-		width: 70%;
-		height: auto;
-		-webkit-transform: translate(-70vw, 0);
-		transform: translate(-70vw, 0);
-		transition: transform 0.3s ease;
-		background: white;
-		padding-bottom: 10px;
-	}
-	.nav-bar.open{
-		transform: translate(0, 0);
-	}
-	.site-name{
-		width: calc(100% - 50px)
-	}
-	.footer div{text-align: center; width: calc(100vw / 3.3);}
-	.cslist{margin: 0}
-}
-
-@media screen and (max-width: 600px) and (min-width: 400px){
-	.nav-bar{
-		width: 70%;
-		height: auto;
-		-webkit-transform: translate(-70vw, 0);
-		transform: translate(-70vw, 0);
-		transition: transform 0.3s ease;
-		background: white;
-		padding-bottom: 10px;
-	}
-	.nav-bar.open{
-		transform: translate(0, 0);
-	}
-	.site-name{
-		width: calc(100% - 50px)
-	}
-	.cslist{margin: 0}
+@media screen and (min-width: 400px){
 	.headline li img{
 		width: 30%;
 		height: 30%;
@@ -57,19 +17,22 @@
 	.header h1{text-align: center;}
 	.nav-bar{
 		height: 50px;
-		text-align: center;
+		width: 100%;
+		background-color: black;
+		-webkit-transform: translate(0, 0);
+		transform: translate(0, 0);
 	}
 	.nav-button{
 		display: inline;
 		padding: 0;
 	}
 	.nav-button a{
-		padding: 0 5px;
-		font-size: xx-large;
-		border: 2px solid blue;
+		font-size: 13px;
 		border-radius: 50px;
-		padding: 0 2.5%;
-		margin: 0 -1%;
+		padding: 0 1.5%;
+		line-height: 50px;
+		color: white;
+		font-family: Verdana, Arial, sans-serif;
 	}
     .headline li img{
 		width: 25%;
@@ -81,37 +44,41 @@
 	.headline li div{
 		order: 1;
 		width: 75%;
-		padding: 0 5%;
-		max-width: 381px;
 	}
 	.headline li{
 		display: flex;
-		flex-wrap: wrap;
-		padding: 0 17%
+        flex-wrap: wrap;
+        padding: 0 2%;
+        width: 100%;
 	}
 	.headline{
 		padding: 7% 2%;
+        display: block;
 	}
 	.cslist{
 		padding-top: 7%;
 		margin: 0;
 	}
+    .login{
+        float: right;
+        line-height: 48px;
+    }
+    .login span{
+        color: white;
+    }
 }
 
 @media screen and (min-width: 1000px){
-	.headline li{
-		padding-left: 32%;
-	}
+    .headline li div{
+    }
 	.nav-button a{
-		padding: 0 6.5%;
-		margin: 0 -2%;
+		padding: 0 2.5%;
 	}
 	.footer div{
 		width: calc(100% / 3);
 	}
-	.back{
-		margin-top: calc(100vh - 140px);
-		margin-left: calc(100vw - 115px);
-	}
+	.back {
+        margin-top: calc(100vh - 140px);
+        margin-left: calc(100vw - 115px);
+    }
 }
-
