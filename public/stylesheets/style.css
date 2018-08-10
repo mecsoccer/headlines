@@ -105,7 +105,12 @@ p,.title{
 	color: red;
 }
 
-.headline li{margin-bottom: 10px;}
+.headline li{
+	margin-bottom: 10px;
+	border: 15px;
+	border-style: groove;
+	border-radius: 15px;
+}
 
 .back{
 	position: fixed;
