@@ -1,3 +1,5 @@
+'use strict';
+
 var openIDB = function(){
 	//if no serviceWorker no need for a db
 	if (!navigator.serviceWorker) {
@@ -14,13 +16,11 @@ var Newscard = function(queryString){
 	this.queryString = queryString || "country=ng";
 	this.url = 'https://newsapi.org/v2/top-headlines?' + this.queryString + '&apiKey=f5b8df00fbc34645b92e985a0e575e29';
 	this.timeLastUpdated = new Date();
-	this.openIDB = openIDB();
-	this.sources = [];
-	this.countries = [];
+	this.dbPromise = openIDB();
 	this.showingLatest = false;
 }
 
-//attach UI element with news to html layout
+//Takes an array of news articles and renders them to the browser
 Newscard.prototype.renderData = function(data){
 	var headlines = document.querySelector('.headline');
 	data.forEach(function(article){
@@ -33,6 +33,14 @@ Newscard.prototype.renderData = function(data){
 	});
 }
 
+//clear the page of any news
+Newscard.prototype.clearNewsList = function(){
+	var list = document.querySelector('.headline');
+	while (list.hasChildNodes()) {
+		list.removeChild(list.firstChild);
+	};
+}
+
 //get data from network
 Newscard.prototype.networkResponse = function(){
 	var newscard = this;
@@ -40,12 +48,13 @@ Newscard.prototype.networkResponse = function(){
 	fetch(req).then(function(response){
 		return response.json();
 	}).then(function(news){
+		newscard.clearNewsList();
 		newscard.renderData(news.articles);
 		newscard.showingLatest = true;
 		return news.articles;
 	}).then(function(articles){
 		// store data in db immediately after network response 
-		newscard.openIDB().then(function(db){
+		newscard.dbPromise.then(function(db){
 			var dbTransaction = db.transaction('headlines', 'readwrite');
 			dbTransaction.objectStore('headlines').put(articles, newscard.queryString);
 		});
@@ -54,10 +63,6 @@ Newscard.prototype.networkResponse = function(){
 
 //get news from network and render to the browser
 Newscard.prototype.getNews = function () {
-	//get current time and time for last network response
-	var currentTime = new Date();
-	currentTime = currentTime.getTime();
-	this.timeLastUpdated = this.timeLastUpdated.getTime();
 	
 	var newscard = this;
 	
@@ -71,7 +76,7 @@ Newscard.prototype.getNews = function () {
 		});
 	}
 	
-	return newscard.renderData(dummyData) || newscard.networkResponse();
+	newscard.networkResponse();
 }
 
 //get from cache if available 
@@ -79,25 +84,6 @@ Newscard.prototype.cacheResponse = function(){
 	//add cache logic here
 	return 'nothing in cache';
 }
-
-//get news from indexedDb
-Newscard.prototype.dbResponse = function(){
-	openIDB().then
-}
-
-//data to render if no network. this is for testing only
-var dummyData = [
-  { urlToImage: '/images/jaachi.jpg',
-	url: '#',
-	title: 'Jaachimma abiakwala nu ozo oo. ',
-	description: 'Onyeoma afutala kwuo na onye obula nuru ube nwanne ya agbakwala oso.'
-  }, { urlToImage: '/images/jaachi.jpg',
-	url: '#',
-	title: 'Jaachimma abiakwala nu ozo oo. ',
-	description: 'Onyeoma Jaachimma afutala kwuo na onye obula nuru ube nwanne ya agbakwala oso.'+
-	             ' O sitere na otu aka ahu kwuo na izu ka mma na nneji'
-  }
-]
 
 var News = new Newscard();
 News.getNews();
