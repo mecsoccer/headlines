@@ -26,9 +26,11 @@ Newscard.prototype.renderData = function(data){
 	data.forEach(function(article){
 		var listItem = document.createElement('li');
 		listItem.innerHTML = '<img src="' + article.urlToImage 
-							 + '" alt="news pic"><div><strong><a class="title" href="' 
+							 + '" alt="news pic"><div class="details"><strong><a class="title" href="' 
 							 + article.url + '" target="_blank">' + article.title
 			                 + '</a></strong><p>' + article.description + '...' + '</p></div>'
+							 + '<div class="source_date_holder"><span class="source">'+ article.source.name 
+							 +'</span><span class="date">'+ article.publishedAt +'</span></div>'
 		headlines.appendChild(listItem);
 	});
 }
