@@ -5,13 +5,13 @@
 	}
 	.headline li img{
 		width: 30%;
-		height: 30%;
 		order: 0;
 		border-radius: 5px;
+		max-height: 185px;
 	}
 	.headline li .details{
 		order: 1;
-		width: 100%;
+		width: 70%;
 		padding: 0 5px;
 	}
 	.headline li .source_date_holder{
@@ -60,12 +60,13 @@
 	.headline li{
 		display: flex;
         flex-wrap: wrap;
-        padding: 0 2%;
         width: 100%;
+		margin-bottom: 20px;
 	}
 	.headline{
-		padding-top: 120px;
+		margin-top: 120px;
         display: block;
+		max-width: 785px;
 	}
 	.cslist{
 		padding-top: 7%;
@@ -73,7 +74,7 @@
 	}
     .login{
         float: right;
-        padding: 14.5px 0;
+        padding: 14.5px;
     }
     .login button a{
 		text-decoration: none;

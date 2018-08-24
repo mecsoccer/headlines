@@ -1,3 +1,4 @@
+//for the menu icon
 var menu = document.querySelector('.menu');
 var main = document.querySelector('.headline');
 var nav = document.querySelector('.nav-bar');

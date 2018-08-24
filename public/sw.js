@@ -1,6 +1,7 @@
-var cacheName = 'headlinesPWA-v2';
-var dataCacheName = 'headlinesData-v2';
-var allCaches = [cacheName, dataCacheName];
+var cacheName = 'headlinesPWA-v1';
+var dataCacheName = 'headlinesData';
+var imgCacheName = 'headlinesImgs';
+var allCaches = [cacheName, dataCacheName, imgCacheName];
 
 self.addEventListener('install', function(event){
 	console.log('[service worker] install');
@@ -8,7 +9,7 @@ self.addEventListener('install', function(event){
 	  caches.open(cacheName).then(function(cache){
 		  console.log('[service worker] caching app shell');
 		  return cache.addAll(['/', '/news', '/news/countries', '/news/sources', '/images/jaachi.jpg',
-		    '/images/logo.png', '/javascripts/idb.js', '/javascripts/newsController.js', '/stylesheets/style.css', 
+		    '/images/icon.png', '/javascripts/idb.js', '/javascripts/newsController.js', '/stylesheets/style.css', 
 			'/stylesheets/responsive.css']);
 	  })
 	);
@@ -19,7 +20,7 @@ self.addEventListener('activate', function(event){
 	event.waitUntil(
 	  caches.keys().then(function(keyList){
 		  return Promise.all(keyList.map(function(key){
-			  if (key !== cacheName && key !== dataCacheName) {
+			  if (key !== cacheName && key !== dataCacheName && key !== imgCacheName) {
 				  console.log('[service worker] deleting old cache: ', key);
 				  return caches.delete(key);
 			  }
@@ -41,11 +42,26 @@ self.addEventListener('fetch', function(event){
 			  });
 		  })
 		);
-	} else {
-		event.respondWith(
-		  caches.match(event.request).then(function(response){
-			  return response || fetch(event.request);
-		  })
-		);
+		return;
 	}
+	if (event.request.url.includes('.jpg' || '.png' || '.jpeg')) {
+		event.respondWith(
+			caches.open(imgCacheName).then(function(cache){
+				return cache.match(event.request.url).then(function(response){
+					if (response) return response;
+					
+					return fetch(event.request).then(function(networkResponse){
+						cache.put(event.request.url, networkResponse.clone());
+						return networkResponse;
+					});
+				});
+			})
+		);
+		return;
+	}
+	event.respondWith(
+		 caches.match(event.request).then(function(response){
+			 return response || fetch(event.request);
+		 })
+	);
 });

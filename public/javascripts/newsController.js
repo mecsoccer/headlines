@@ -18,6 +18,7 @@ var Newscard = function(queryString){
 	this.timeLastUpdated = new Date();
 	this.dbPromise = openIDB();
 	this.showingLatest = false;
+	this.cleanImgCache;
 }
 
 //Takes an array of news articles and renders them to the browser
@@ -81,10 +82,31 @@ Newscard.prototype.getNews = function () {
 	newscard.networkResponse();
 }
 
-//get from cache if available 
-Newscard.prototype.cacheResponse = function(){
-	//add cache logic here
-	return 'nothing in cache';
+//remove unwanted photos from the cache
+Newscard.prototype.cleanImgCache = function(){
+	var newscard = this;
+	
+	return this.dbPromise.then(function(db){
+		if(!db) return;
+		
+		var photosNeeded = [];
+		
+		var dbTransaction = db.transaction('headlines').objectStore('headlines');
+		return dbTransaction.get(newscard.queryString).then(function(dbData){
+			dbData.forEach(function(article){
+				photosNeeded.push(article.urlToImage);
+			});
+			console.log(photosNeeded);
+			return caches.open('headlinesImgs');
+		}).then(function(cache){
+			cache.keys().then(function(requests){
+				requests.forEach(function(request){
+					var url = new URL(request.url);
+					if (!photosNeeded.includes(url.href)) cache.delete(request);
+				});
+			});
+		});
+	});
 }
 
 var News = new Newscard();
