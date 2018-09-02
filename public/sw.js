@@ -1,3 +1,5 @@
+'use strict';
+
 var cacheName = 'headlinesPWA-v1';
 var dataCacheName = 'headlinesData';
 var imgCacheName = 'headlinesImgs';
@@ -9,8 +11,8 @@ self.addEventListener('install', function(event){
 	  caches.open(cacheName).then(function(cache){
 		  console.log('[service worker] caching app shell');
 		  return cache.addAll(['/', '/news', '/news/countries', '/news/sources', '/images/jaachi.jpg',
-		    '/images/icon.png', '/javascripts/idb.js', '/javascripts/newsController.js', '/stylesheets/style.css', 
-			'/stylesheets/responsive.css']);
+		    '/javascripts/idb.js', '/javascripts/newsController.js', '/javascripts/countryController.js',
+            '/javascripts/sourceController.js', '/stylesheets/style.css', '/stylesheets/responsive.css']);
 	  })
 	);
 });
@@ -64,4 +66,28 @@ self.addEventListener('fetch', function(event){
 			 return response || fetch(event.request);
 		 })
 	);
+});
+
+self.addEventListener('push', function(event) {
+  console.log('[Service Worker] Push Received.');
+  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+
+  const title = 'Push Codelab';
+  const options = {
+    body: 'Yay it works.',
+    icon: 'images/icon.png',
+    badge: 'images/badge.png'
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', function(event) {
+  console.log('[Service Worker] Notification click Received.');
+
+  event.notification.close();
+
+  event.waitUntil(
+    clients.openWindow('https://developers.google.com/web/')
+  );
 });

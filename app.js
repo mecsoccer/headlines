@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -44,5 +45,12 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+var mongodb = 'mongodb://localhost/database';
+mongoose.connect(mongodb);
+mongoose.Promise = global.Promise;
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDb connection error:'));
 
 module.exports = app;
