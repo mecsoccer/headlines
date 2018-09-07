@@ -1,6 +1,6 @@
 'use strict';
 
-var cacheName = 'headlinesPWA-v1';
+var cacheName = 'headlinesPWA-v2';
 var dataCacheName = 'headlinesData';
 var imgCacheName = 'headlinesImgs';
 var allCaches = [cacheName, dataCacheName, imgCacheName];
@@ -10,9 +10,10 @@ self.addEventListener('install', function(event){
 	event.waitUntil(
 	  caches.open(cacheName).then(function(cache){
 		  console.log('[service worker] caching app shell');
-		  return cache.addAll(['/', '/news', '/news/countries', '/news/sources', '/images/jaachi.jpg',
-		    '/javascripts/idb.js', '/javascripts/newsController.js', '/javascripts/countryController.js',
-            '/javascripts/sourceController.js', '/stylesheets/style.css', '/stylesheets/responsive.css']);
+		  return cache.addAll(['/', '/news', '/news/countries', '/news/sources','/javascripts/idb.js', 
+            '/javascripts/newsController.js', '/javascripts/countryController.js','/javascripts/sourceController.js', 
+            '/stylesheets/style.css', '/stylesheets/responsive.css', '/images/news.PNG', 
+            '/images/jaachi.jpg']);
 	  })
 	);
 });
@@ -46,7 +47,7 @@ self.addEventListener('fetch', function(event){
 		);
 		return;
 	}
-	if (event.request.url.includes('.jpg' || '.png' || '.jpeg')) {
+	if (event.request.url.includes('.jpg' || '.png' || '.jpeg' || '.PNG' || '.JPEG' || '.JPG')) {
 		event.respondWith(
 			caches.open(imgCacheName).then(function(cache){
 				return cache.match(event.request.url).then(function(response){

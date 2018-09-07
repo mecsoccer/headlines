@@ -1,5 +1,23 @@
 'use strict';
 
+var Newscard = function(queryString){
+
+	this.queryString = queryString || "country=ng";
+	this.url = 'https://newsapi.org/v2/top-headlines?' + this.queryString + '&apiKey=f5b8df00fbc34645b92e985a0e575e29';
+	this.timeLastUpdated = new Date();
+	this.dbPromise = openIDB();
+	this.showingLatest = false;
+	this.cleanImgCache;
+
+	var newscard = this;
+
+	setInterval(function(){
+		newscard.cleanImgCache;
+		triggerPushNotification();
+	}, 60 * 15 * 1000);
+
+};
+
 var openIDB = function(){
 	//if no serviceWorker no need for a db
 	if (!navigator.serviceWorker) {
@@ -8,25 +26,16 @@ var openIDB = function(){
 	
 	return idb.open('Headlines', 1, function(upgradeDb){
 		var store = upgradeDb.createObjectStore('headlines');
-		store.createIndex('time', 'publishedAt');
 	});
-}
-
-var Newscard = function(queryString){
-	this.queryString = queryString || "country=ng";
-	this.url = 'https://newsapi.org/v2/top-headlines?' + this.queryString + '&apiKey=f5b8df00fbc34645b92e985a0e575e29';
-	this.timeLastUpdated = new Date();
-	this.dbPromise = openIDB();
-	this.showingLatest = false;
-	this.cleanImgCache;
-}
+};
 
 //Takes an array of news articles and renders them to the browser
 Newscard.prototype.renderData = function(data){
 	var headlines = document.querySelector('.headline');
 	data.forEach(function(article){
 		var listItem = document.createElement('li');
-		listItem.innerHTML = `<img src="${article.urlToImage}" alt="news pic" onerror="this.src='/images/news.png';">
+		listItem.innerHTML = `<img src="${article.urlToImage}" alt="news pic" 
+                                onerror="this.src='/images/news.PNG';">
 							  <div class="details">
 							    <strong>
 								  <a class="title" href="${article.url}" target="_blank">${article.title}</a>
@@ -81,9 +90,11 @@ Newscard.prototype.getNews = function () {
 	//before then respond with cached data	
 	if ('caches' in window) {
 		caches.match(newscard.url).then(function(response){
-			if (response) return response.json();
+			if (response.ok) return response.json();
 		}).then(function(news){
 			newscard.renderData(news.articles);
+		}).catch(function(err){
+            console.log(err);
 		});
 	}
 	
@@ -165,12 +176,12 @@ function urlB64ToUint8Array(base64String) {
 function initializeUI() {
 	
   pushButton.addEventListener('click', function() {
-  pushButton.disabled = true;
-  if (isSubscribed) {
-    unsubscribeUser();
-  } else {
-    subscribeUser();
-  }
+    pushButton.disabled = true;
+    if (isSubscribed) {
+      unsubscribeUser();
+    } else {
+      subscribeUser();
+    }
   });
 	
   // Set the initial subscription value
