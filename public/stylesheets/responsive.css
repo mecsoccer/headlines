@@ -13,6 +13,8 @@
 		order: 1;
 		width: 70%;
 		padding: 0 2%;
+		max-height: 80px;
+		overflow: auto;
 	}
 	.headline li .source_date_holder{
 		order: 1;
@@ -67,10 +69,14 @@
 		margin-top: 120px;
         display: block;
 		max-width: 785px;
+		min-height: calc(100vh - 225px);
 	}
-	.cslist{
-		padding-top: 7%;
-		margin: 0;
+	.source_list{
+		min-height: calc(100vh - 155px);
+		margin-top: 120px;
+	}
+	.source{
+		width: 29%;
 	}
     .login{
         float: right;
@@ -90,8 +96,10 @@
 	.footer div{
 		width: calc(100% / 3);
 	}
-	.back {
-        margin-top: calc(100vh - 140px);
-        margin-left: calc(100vw - 115px);
-    }
+	.source_list{
+		margin: 120px 15% 0 15%;
+	}
+	.source{
+		width: 21%;
+	}
 }

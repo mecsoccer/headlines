@@ -7,7 +7,7 @@ html(lang='en')
     meta(name='mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='black')
-    meta(name='msapplication-TileImage', content='images/icon.PNG')
+    meta(name='msapplication-TileImage', content='/images/icon.PNG')
     meta(name='msapplication-TileColor', content='#2F3BA2')
     link(rel='apple-touch-icon' href='/images/icon.PNG')
     link(rel='stylesheet', href='/stylesheets/style.css')
@@ -30,9 +30,11 @@ html(lang='en')
         li(class='nav-button')
           a(href='/news/sources') Sources
         li(class='nav-button')
-          a(href='') Feedback
-        li(class='nav-button')
-          a(href='') More
+          a(href='#') Feedback
+        li(class='nav-button dropbtn')
+          a(href='#') Notifications
+          div(class='dropdown-content')
+            button(class='notify') Enable Notifications
         div(class='login')
           button()
             a(href='#') login
@@ -54,8 +56,9 @@ html(lang='en')
       div(class='email')
         a(class='zocial-gmail', href='')
         p head@line.com
-      button(class='pushNotification') enable push
-      button(class='triggerPush') trigger a push msg.
+
     script(src='/javascripts/toggle.js')
+    script(src='/javascripts/idb.js')
+    script(src='/javascripts/newscontroller.js')
 
     block scripts

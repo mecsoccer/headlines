@@ -11,9 +11,10 @@ self.addEventListener('install', function(event){
 	  caches.open(cacheName).then(function(cache){
 		  console.log('[service worker] caching app shell');
 		  return cache.addAll(['/', '/news', '/news/countries', '/news/sources','/javascripts/idb.js', 
-            '/javascripts/newsController.js', '/javascripts/countryController.js','/javascripts/sourceController.js', 
+            '/javascripts/newsController.js', '/javascripts/index.js', '/javascripts/countryController.js',
+			'/javascripts/sourceController.js', '/javascripts/sourcesList.js',
             '/stylesheets/style.css', '/stylesheets/responsive.css', '/images/news.PNG', 
-            '/images/jaachi.jpg']);
+            '/images/jaachi.jpg', '/images/icon.PNG']);
 	  })
 	);
 });
@@ -73,11 +74,10 @@ self.addEventListener('push', function(event) {
   console.log('[Service Worker] Push Received.');
   console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 
-  const title = 'Push Codelab';
+  const title = 'Headlines update'
   const options = {
-    body: 'Yay it works.',
-    icon: 'images/icon.png',
-    badge: 'images/badge.png'
+    body: 'New headlines are available. Refresh page to view them.',
+    icon: 'images/icon.png'
   };
 
   event.waitUntil(self.registration.showNotification(title, options));

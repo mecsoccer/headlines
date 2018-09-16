@@ -1,8 +1,7 @@
 extends layout
 
 block content
-  h1(class='cslist')= title
-  ul
-  each source in list
-    li(class='slist')
-      a(href=source.url) #{source.source}
+  div(class='source_list')
+
+block scripts
+  script(src='/javascripts/sourcesList.js')

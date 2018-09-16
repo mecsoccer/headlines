@@ -1,8 +1,9 @@
 extends layout
 
 block content
-  h1(class='cslist')= title
-  ul
-  each country in list
-    li(class='clist')
-      a(href=country.url) #{country.country}
+  div(class='source_list')
+    each country in list
+      div(class='source')
+        a(href=country.url)
+          p(class='name') #{country.country}
+          p(class='category') (#{country.abbrev})

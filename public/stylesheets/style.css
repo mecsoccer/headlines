@@ -95,6 +95,41 @@ p,.title{
 	border-bottom: 1px solid gainsboro;
 }
 
+.dropbtn{
+	height: fit-content;
+    display: inline-block;
+	position: absolute;
+}
+
+.dropbtn:hover{
+	background: black;
+}
+
+.nav-button .notify{
+	width: fit-content;
+    padding: 12px;
+    font-size: 20px;
+	cursor: pointer;
+}
+
+.dropdown-content{
+	display: none;
+    position: relative;
+    width: fit-content;
+    height: 50px;
+    cursor: pointer;
+    background: darkgray;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2)
+}
+
+.dropdown-content:hover{
+	background: yellow;
+}
+
+.dropbtn:hover .dropdown-content{
+	display: block;
+}
+
 .nav-button a{
 	color: red;
 }
@@ -102,6 +137,7 @@ p,.title{
 .headline{
 	width: 95%;
 	margin: 75px auto;
+	min-height: calc(100vh - 180px);
 }
 
 .headline li{
@@ -133,7 +169,7 @@ p,.title{
 	display: inline-block;
 }
 
-.source{
+.source_name{
 	font-style: italic;
 	font-size: 12px;
 }
@@ -155,7 +191,9 @@ p,.title{
 	color: red;
 }
 
-.footer{display: inlne}
+.footer{
+	display: inline;
+}
 
 .footer div{
 	float: left;
@@ -163,8 +201,45 @@ p,.title{
 	text-align: center;
 }
 
-.cslist,.clist,.slist{
-	text-align: center;
+.source_list{
+    margin: 60px 2% 0 2%;
+    text-align: center;
+    min-height: calc(100vh - 95px);
+	overflow: auto;
+}
+
+.source{
+    width: 46%;
+    float: left;
+    border: 1px solid gainsboro;
+    margin: 1% 2%;
+	border-radius: 20px;
+	background: white;
+	padding: 10px 10px;
+	max-height: 62px;
+	overflow: auto;
+	transition: padding 0.5s ease-out;
+}
+
+.source:hover{
+	padding: 10px 0px;
+	background: cyan;
+}
+
+.source a p{
+	padding: 2px 0;
+}
+
+.source a .name{
+	color: red;
+	background: gainsboro;
+	border-radius: 10px;
+	font-size: 15px;
+}
+
+.source a .category{
+	color: green;
+	font-size: 13px;
 }
 
 .form{

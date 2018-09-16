@@ -1,5 +1,16 @@
 'use strict';
 
+var openIDB = function(){
+	//if no serviceWorker no need for a db
+	if (!navigator.serviceWorker) {
+		return Promise.resolve();
+	}
+	
+	return idb.open('Headlines', 1, function(upgradeDb){
+		var store = upgradeDb.createObjectStore('headlines');
+	});
+};
+
 var Newscard = function(queryString){
 
 	this.queryString = queryString || "country=ng";
@@ -18,16 +29,25 @@ var Newscard = function(queryString){
 
 };
 
-var openIDB = function(){
-	//if no serviceWorker no need for a db
-	if (!navigator.serviceWorker) {
-		return Promise.resolve();
+//get news from network and render to the browser
+Newscard.prototype.getNews = function () {
+	
+	var newscard = this;
+	
+	//if browser supports caching, check if service worker has cached this request 
+	//before then respond with cached data	
+	if ('caches' in window) {
+		caches.match(newscard.url).then(function(response){
+			if (response.ok) return response.json();
+		}).then(function(news){
+			newscard.renderData(news.articles);
+		}).catch(function(err){
+            console.log(err);
+		});
 	}
 	
-	return idb.open('Headlines', 1, function(upgradeDb){
-		var store = upgradeDb.createObjectStore('headlines');
-	});
-};
+	newscard.networkResponse();
+}
 
 //Takes an array of news articles and renders them to the browser
 Newscard.prototype.renderData = function(data){
@@ -43,19 +63,11 @@ Newscard.prototype.renderData = function(data){
 								<p>${article.description}...</p>
 						      </div>
 							  <div class="source_date_holder">
-							    <span class="source">${article.source.name}</span>
+							    <span class="source_name">${article.source.name}</span>
 								<span class="date">${article.publishedAt}</span>
 							  </div>`;
 		headlines.appendChild(listItem);
 	});
-}
-
-//clear the page of any news
-Newscard.prototype.clearNewsList = function(){
-	var list = document.querySelector('.headline');
-	while (list.hasChildNodes()) {
-		list.removeChild(list.firstChild);
-	};
 }
 
 //get data from network
@@ -81,24 +93,12 @@ Newscard.prototype.networkResponse = function(){
 	});
 }
 
-//get news from network and render to the browser
-Newscard.prototype.getNews = function () {
-	
-	var newscard = this;
-	
-	//if browser supports caching, check if service worker has cached this request 
-	//before then respond with cached data	
-	if ('caches' in window) {
-		caches.match(newscard.url).then(function(response){
-			if (response.ok) return response.json();
-		}).then(function(news){
-			newscard.renderData(news.articles);
-		}).catch(function(err){
-            console.log(err);
-		});
-	}
-	
-	newscard.networkResponse();
+//clear the page of any news
+Newscard.prototype.clearNewsList = function(){
+	var list = document.querySelector('.headline');
+	while (list.hasChildNodes()) {
+		list.removeChild(list.firstChild);
+	};
 }
 
 //remove unwanted photos from the cache
@@ -153,7 +153,7 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 
 var applicationServerPublicKey = 'BE2pL_dnGv7mPLZytCQlTbpqfWNVm42UVP0JzX7IG1gNWTF03k7h1rm0DTujN554xscv0BTIUGkWmM0KiGviiMA';
 
-var pushButton = document.querySelector('.pushNotification');
+var pushButton = document.querySelector('.notify');
 var triggerPush = document.querySelector('.triggerPush');
 
 triggerPush.addEventListener('click', triggerPushNotification());
@@ -201,16 +201,16 @@ function initializeUI() {
 
 function updateBtn() {
   if (Notification.permission === 'denied') {
-    pushButton.textContent = 'Push Messaging Blocked.';
+    pushButton.textContent = 'Notifications Blocked';
     pushButton.disabled = true;
     updateSubscriptionOnServer(null);
     return;
   }
 
   if (isSubscribed) {
-    pushButton.textContent = 'Disable Push Messaging';
+    pushButton.textContent = 'Disable Notification';
   } else {
-    pushButton.textContent = 'Enable Push Messaging';
+    pushButton.textContent = 'Enable Notification';
   }
 
   pushButton.disabled = false;

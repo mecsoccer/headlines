@@ -47,7 +47,7 @@ exports.triggerPush = function (req, res) {
 };
 
 var triggerPushMsg = function(subscription, dataToSend) {
-  return webpush.sendNotification(subscription, dataToSend)
+  return webpush.sendNotification(subscription, dataToSend, { TTL: 60 })
   .catch((err) => {
     if (err.statusCode === 410) {
       return deleteSubscriptionFromDatabase(subscription._id);
