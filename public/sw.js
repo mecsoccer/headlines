@@ -1,6 +1,6 @@
 'use strict';
 
-var cacheName = 'headlinesPWA-v2';
+var cacheName = 'headlinesPWA-v1';
 var dataCacheName = 'headlinesData';
 var imgCacheName = 'headlinesImgs';
 var allCaches = [cacheName, dataCacheName, imgCacheName];

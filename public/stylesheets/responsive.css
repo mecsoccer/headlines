@@ -33,21 +33,33 @@
 		height: 50px;
 		top: 50px;
 		width: 100%;
+		padding: 0 1.5%;
 		background-color: red;
 		-webkit-transform: translate(0, 0);
 		transform: translate(0, 0);
 	}
 	.nav-button{
 		display: inline;
-		padding: 0;
+		padding: 17px 0;
 		border: none;
 	}
 	.nav-button a{
 		font-size: 13px;
-		padding: 0 1.5%;
+		padding: 17px 1.5%;
 		line-height: 50px;
 		color: white;
 		font-family: Verdana, Arial, sans-serif;
+	}
+	.dropbtn{
+		
+	}
+	.dropdown-content{
+		padding: 4px 2px;
+	}
+	.nav-button .notify{
+        width: 140px;
+        overflow: hidden;
+        padding: 0 2px;
 	}
     .headline li img{
 		width: 25%;
@@ -88,10 +100,23 @@
 }
 
 @media screen and (min-width: 1000px){
-    .headline li div{
-    }
-	.nav-button a{
+	.nav-bar{
 		padding: 0 2.5%;
+	}
+	.nav-button a{
+		padding: 17px 2.5%;
+	}
+	.nav-button .notify{
+        width: 140px;
+        overflow: hidden;
+        padding: 0 2px;
+	}
+	.dropdown-content{
+	    left: -100px;
+        padding: 4px 2px;
+	}
+	.dropbtn{
+		padding: 17px 0;
 	}
 	.footer div{
 		width: calc(100% / 3);

@@ -208,9 +208,9 @@ function updateBtn() {
   }
 
   if (isSubscribed) {
-    pushButton.textContent = 'Disable Notification';
+    pushButton.textContent = 'Disable Notifications';
   } else {
-    pushButton.textContent = 'Enable Notification';
+    pushButton.textContent = 'Enable Notifications';
   }
 
   pushButton.disabled = false;

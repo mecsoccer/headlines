@@ -95,10 +95,14 @@ p,.title{
 	border-bottom: 1px solid gainsboro;
 }
 
+.nav-button:hover{
+	background: black;
+}
+
 .dropbtn{
 	height: fit-content;
-    display: inline-block;
-	position: absolute;
+    display: block;
+	position: relative;
 }
 
 .dropbtn:hover{
@@ -106,20 +110,23 @@ p,.title{
 }
 
 .nav-button .notify{
-	width: fit-content;
-    padding: 12px;
-    font-size: 20px;
-	cursor: pointer;
+    width: fit-content;
+    height: auto;
+    padding: 0px 0;
+    font-size: 15px;
+    cursor: pointer;
 }
 
 .dropdown-content{
 	display: none;
     position: relative;
     width: fit-content;
-    height: 50px;
+    height: fit-content;
+    padding: 4px 0;
+    margin: auto;
     cursor: pointer;
-    background: darkgray;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2)
+    background: inherit;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .dropdown-content:hover{
@@ -248,6 +255,7 @@ p,.title{
 }
 
 .login {
+	display: none;
 	padding: 10px 0;
 	text-align: center;
 }
