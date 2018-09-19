@@ -7,7 +7,7 @@ var req = new Request('https://newsapi.org/v2/sources?apiKey=f5b8df00fbc34645b92
 caches.match(req)
 .then(function(cacheRes){
   if (cacheRes) return cacheRes;
-  return fetch(req)
+  return fetch(req);
 })
 .then(function(res){
   return res.json();

@@ -34,19 +34,27 @@ Newscard.prototype.getNews = function () {
 	
 	var newscard = this;
 	
-	//if browser supports caching, check if service worker has cached this request 
-	//before then respond with cached data	
-	if ('caches' in window) {
-		caches.match(newscard.url).then(function(response){
-			if (response.ok) return response.json();
-		}).then(function(news){
-			newscard.renderData(news.articles);
-		}).catch(function(err){
-            console.log(err);
-		});
-	}
+	var req = new Request(newscard.url);
 	
-	newscard.networkResponse();
+	caches.match(newscard.url)
+	.then(function(response){
+		if (response) return response;
+		newscard.showingLatest = true;
+		return fetch(req);
+	})
+	.then(function(res){
+		return res.json();
+	})
+	.then(function(news){
+		newscard.renderData(news.articles);
+		return news.articles;
+	})
+	.then(function(articles){
+		if (newscard.showingLatest === false) {
+			newscard.networkResponse(req);
+		}
+	    Promise.resolve();
+	})
 }
 
 //Takes an array of news articles and renders them to the browser
@@ -70,11 +78,10 @@ Newscard.prototype.renderData = function(data){
 	});
 }
 
-//get data from network
-Newscard.prototype.networkResponse = function(){
+Newscard.prototype.networkResponse = function(request){
 	var newscard = this;
-	var req = new Request(newscard.url);
-	fetch(req)
+	
+	fetch(request)
 	.then(function(response){
 		return response.json();
 	})
@@ -154,9 +161,6 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 var applicationServerPublicKey = 'BE2pL_dnGv7mPLZytCQlTbpqfWNVm42UVP0JzX7IG1gNWTF03k7h1rm0DTujN554xscv0BTIUGkWmM0KiGviiMA';
 
 var pushButton = document.querySelector('.notify');
-var triggerPush = document.querySelector('.triggerPush');
-
-triggerPush.addEventListener('click', triggerPushNotification());
 
 function urlB64ToUint8Array(base64String) {
   var padding = '='.repeat((4 - base64String.length % 4) % 4);
