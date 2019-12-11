@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../apis/storemanager';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
@@ -57,10 +57,6 @@ const ProductsShelve = () => {
     }
 
     function fetchProducts() {
-      const axiosInstance = axios.create({
-        baseURL: 'http://localhost:8080/api/v1',
-      });
-      
       axiosInstance.defaults.headers.common['Authorization'] = sessionStorage.getItem('storeToken');
       axiosInstance.get('/products')
         .then((data) => {

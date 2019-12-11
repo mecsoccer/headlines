@@ -34,28 +34,6 @@ const columns = [
   },
 ];
 
-function createData(name, code, population, size, price) {
-  return { name, code, population, size, price };
-}
-
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263, 2500),
-  createData('China', 'CN', 1403500365, 9596961, 2500),
-  createData('Italy', 'IT', 60483973, 301340, 2500),
-  createData('United States', 'US', 327167434, 9833520, 2500),
-  createData('Canada', 'CA', 37602103, 9984670, 2500),
-  createData('Australia', 'AU', 25475400, 7692024, 2500),
-  createData('Germany', 'DE', 83019200, 357578, 2500),
-  createData('Ireland', 'IE', 4857000, 70273, 2500),
-  createData('Mexico', 'MX', 126577691, 1972550, 2500),
-  createData('Japan', 'JP', 126317000, 377973, 2500),
-  createData('France', 'FR', 67022000, 640679, 2500),
-  createData('United Kingdom', 'GB', 67545757, 242495, 2500),
-  createData('Russia', 'RU', 146793744, 17098246, 2500),
-  createData('Nigeria', 'NG', 200962417, 923768, 2500),
-  createData('Brazil', 'BR', 210147125, 8515767, 2500),
-];
-
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -80,6 +58,8 @@ export default function StickyHeadTable(props) {
     setPage(0);
   };
 
+  const users = [...props.users];
+
   return (
     <Paper className={classes.root}>
       <div className={classes.tableWrapper}>
@@ -98,14 +78,14 @@ export default function StickyHeadTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-          {props.sales.map((sale) => {
+          {props.sales.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((sale) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={sale.id}>
                   <TableCell align="center" key={1/*product.productname*/}>
                     {sale.productname}
                   </TableCell>
                   <TableCell align="center" key={2/*product.productname*/}>
-                    {sale.seller}
+                    {{...(users.find(user => user.id == sale.seller))}.username}
                   </TableCell>
                   <TableCell align="center" key={3/*product.productname*/}>
                     {`
@@ -116,22 +96,8 @@ export default function StickyHeadTable(props) {
                     {sale.quantity}
                   </TableCell>
                   <TableCell key={5} align="center">
-                    {sale.total}
+                    {sale.totalprice}
                   </TableCell>
-                </TableRow>
-              );
-            })}
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map((column, idx) => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
-                    );
-                  })}
                 </TableRow>
               );
             })}
@@ -141,7 +107,7 @@ export default function StickyHeadTable(props) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={props.sales.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}

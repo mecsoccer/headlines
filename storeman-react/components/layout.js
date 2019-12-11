@@ -143,7 +143,7 @@ export default function MiniDrawer(props) {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              Mini variant drawer
+              Store Manager
             </Typography>
           </Toolbar>
         </AppBar>

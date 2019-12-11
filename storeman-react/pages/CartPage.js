@@ -70,6 +70,7 @@ const CartPage = () => {
     const index = cartProducts.length;
     const { id: productId, price, productname, quantityleft } = products.find(prod => prod.id === id);
     const totalprice = price;
+
     setCartProducts([
       ...cartProducts,
       { id: productId, productname, price, totalprice, quantity: 1, quantityleft, index }
@@ -122,12 +123,16 @@ const CartPage = () => {
   const cartProductProps = {
     products,
     cartProducts,
+    setCartProducts,
     searchInput,
     setSearchInput,
     addProductToCart,
     removeProductFromCart,
     incrementProduct,
     decrementProduct,
+    closeDialog,
+    fetchProd,
+    initiateFetchProducts,
     customStyle: {height:'70vh',overflowY: 'scroll',padding:'0 20px'}
   };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axiosInstance from '../apis/storemanager';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,20 +31,16 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/api/v1',
-});
-
 const SalesRecord = () => {
     const classes = useStyles();
 
-    const initialQueryState = { seller: '', productName: '' };
+    const initialQueryState = { seller: '', productId: '' };
 
     const [sales, updateSales] = React.useState([]);
     const [fetchSales, initiateFetchSales] = React.useState(false);
 
     const [users, setUsers] = React.useState([]);
-    const [fetchUsers, initiateFetchUsers] = React.useState(false);
+    //const [fetchUsers, initiateFetchUsers] = React.useState(false);
 
     const [products, setProducts] = React.useState([]);
     const [fetchProducts, initiateFetchProducts] = React.useState(false);
@@ -55,13 +51,10 @@ const SalesRecord = () => {
     const [query, setQuery] = React.useState({...initialQueryState, from: dateFrom, to: dateTo});
 
     React.useEffect(() => {
-      fetchSaleRecord();
-    }, [fetchSales]);
-
-    React.useMemo(() => {
+      fetchSalesRecord();
       fetchAllUsers();
       fetchAllProducts();
-    }, [fetchUsers, fetchProducts]);
+    }, [fetchSales]);
 
     const sellerProps = {
         options: users.filter((user, idx, arr) => arr.indexOf(user) === idx),
@@ -73,11 +66,11 @@ const SalesRecord = () => {
       getOptionLabel: option => option.productname,
     };
 
-    function fetchSaleRecord() {
-      const { seller, productName, from, to } = query;
+    function fetchSalesRecord() {
+      const { seller, productId, from, to } = query;
 
       axiosInstance.defaults.headers.common['Authorization'] = sessionStorage.getItem('storeToken');
-      axiosInstance.get(`/sales?seller=${seller}&productName=${productName}&from=${from}&to=${to}`)
+      axiosInstance.get(`/sales?seller=${seller}&productId=${productId}&from=${from}&to=${to}`)
         .then((data) => {
           updateSales(data.data.allSales);
         })
@@ -102,7 +95,7 @@ const SalesRecord = () => {
         .catch(err => console.log(err));
     }
 
-    const salesTableProps = { sales };
+    const salesTableProps = { sales, users };
     
     return (
         <main style={{width: '100%', marginTop: 100,marginBottom:50}}>
@@ -114,7 +107,7 @@ const SalesRecord = () => {
                   {...sellerProps}
                   id="controlled-demo"
                   onChange={(event, newValue) => {
-                    setQuery({...query, seller: newValue ? newValue.username : ''});
+                    setQuery({...query, seller: newValue ? newValue.id : ''});
                     initiateFetchSales(!fetchSales);
                   }}
                   renderInput={params => (
@@ -126,8 +119,8 @@ const SalesRecord = () => {
                   {...productsProps}
                   id="controlled-demo"
                   onChange={(event, newValue) => {
-                    setQuery({...query, productName: newValue ? newValue.productname : ''});
-                    initiateFetchProducts(!fetchProducts)
+                    setQuery({...query, productId: newValue ? newValue.id : ''});
+                    initiateFetchSales(!fetchSales);
                   }}
                   renderInput={params => (
                     <TextField {...params} label="choose product" margin="normal" fullWidth />

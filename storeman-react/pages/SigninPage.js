@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
+import axiosInstance from '../apis/storemanager';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,8 +19,8 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link color="inherit" href="#">
+        Store Manager
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -57,16 +57,13 @@ export default function SignIn() {
   
   function logIn(e, username, password) {
     e.preventDefault();
-  
-    const axiosInstance = axios.create({
-      baseURL: 'http://localhost:8080/api/v1/auth',
-    });
-    
-    axiosInstance.post('/login', {usernameInput: username, passwordInput: password})
+
+    axiosInstance.post('/auth/login', {usernameInput: username, passwordInput: password})
       .then((data) => {
         router.push('/CartPage');
         sessionStorage.setItem('storeToken', data.data.token);
         sessionStorage.setItem('storeUserRole', data.data.role);
+        sessionStorage.setItem('storeUserId', data.data.id);
       })
       .catch(err => console.log(err));
   }

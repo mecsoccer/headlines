@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -19,13 +20,43 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const axiosInstance = axios.create({
+  baseURL: 'http://localhost:8080/api/v1',
+});
+
 const CartView = (props) => {
   const classes = useStyles();
+
+  function createSaleOrder() {
+    if (!props.cartProducts.length) return;
+    const productsToSale = props.cartProducts.map((prod) => {
+      const {
+        id: productId,
+        productname: productName,
+        price: unitPrice,
+        totalprice: totalPrice,
+        quantity,
+      } = prod;
+      
+      return {
+        seller: sessionStorage.getItem('storeUserId'), productId, productName, quantity, unitPrice, totalPrice }
+    });
+
+    axiosInstance.defaults.headers.common['Authorization'] = sessionStorage.getItem('storeToken');
+    axiosInstance.post('/sales', { sales: productsToSale })
+      .then((data) => {
+        alert('sale order successful');
+        props.closeDialog();
+        props.initiateFetchProducts(!props.fetchProd);
+        props.setCartProducts([]);
+      })
+      .catch(err => console.log(err));
+  }
 
   return (
     <>
       <DialogTitle id="form-dialog-title">Overview of Cart Content</DialogTitle>
-      <List style={{...props.customStyle, width: 600}} className={classes.root} >
+      <List style={{...props.customStyle, width: 600}} className={classes.root}>
         {
           props.cartProducts
             .filter((prod) => prod.productname.includes(props.searchInput ? props.searchInput : ''))
@@ -65,7 +96,14 @@ const CartView = (props) => {
         }
       </List>
       <div style={{display:'flex',justifyContent:'center',margin:'40px 0'}}>
-        <Button variant="contained" color="primary" style={{width:'60%'}}>create sale order</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          style={{width:'60%'}}
+          onClick={() => createSaleOrder()}
+        >
+          create sale order
+        </Button>
       </div>
     </>  
   );
