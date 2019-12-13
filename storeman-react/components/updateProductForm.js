@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axiosInstance from '../apis/storemanager';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -30,10 +30,6 @@ export default function LayoutTextFields(props) {
 
     return () => abortController.abort();
   }, [productShouldUpdate]);
-
-  const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8080/api/v1',
-  });
   
   axiosInstance.defaults.headers.common['Authorization'] = sessionStorage.getItem('storeToken');
 

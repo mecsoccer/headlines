@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axiosInstance from '../apis/storemanager';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -19,10 +19,6 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
   },
 }));
-
-const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/api/v1',
-});
 
 const CartView = (props) => {
   const classes = useStyles();
