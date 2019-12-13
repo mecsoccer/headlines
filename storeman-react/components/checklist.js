@@ -38,7 +38,7 @@ export default function CheckboxList(props) {
             InputProps={{ ...params.InputProps, type: 'search' }}
           />
         )}
-        onChange={(e, inputValue) => props.setSearchInput(inputValue)}
+        onInput={(e, inputValue) => props.setSearchInput(inputValue)}
       />
       {
         props.products

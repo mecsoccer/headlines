@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../apis/storemanager';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -29,10 +29,6 @@ const CartPage = () => {
   }
 
   function fetchAvailableProducts() {
-    const axiosInstance = axios.create({
-      baseURL: 'http://localhost:8080/api/v1',
-    });
-    
     axiosInstance.defaults.headers.common['Authorization'] = sessionStorage.getItem('storeToken');
     axiosInstance.get('/products/available')
       .then((data) => {
@@ -169,7 +165,7 @@ const CartPage = () => {
               renderInput={params => (
                 <TextField {...params} label="With categories" variant="outlined" fullWidth />
               )}
-              onChange={(e, value) => productsByCategory(value)}
+              onInput={(e, value) => productsByCategory(value)}
             />
           </div>
           <Checklist {...cartProductProps}/>

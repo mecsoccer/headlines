@@ -89,7 +89,7 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={(e) => updateUsername(e.target.value)}
+            onInput={(e) => updateUsername(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -101,7 +101,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={(e) => updatePassword(e.target.value)}
+            onInput={(e) => updatePassword(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
